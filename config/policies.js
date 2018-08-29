@@ -4,6 +4,6 @@ module.exports = {
     '*': false,
   },
   user: {
-    create: 'isAdim',
+    create: 'isAdmin',
   },
 };
