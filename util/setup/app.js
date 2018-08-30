@@ -1,9 +1,8 @@
-/* global Controllers, Hooks */
+/* global _config, Controllers, Hooks */
 
 const Koa = require('koa');
 const Router = require('koa-router');
-const middleware = require('../../config/middleware'); // todo: try/catch is this file required
-const { koaNotImplemented } = require('../responses');
+const { notImplemented } = require('../responses');
 
 module.exports = function setupApp() {
   const app = new Koa();
@@ -21,6 +20,7 @@ module.exports = function setupApp() {
       .forEach(([methodName, method]) => {
         router.all(
           `/${controllerName}/${methodName}`,
+          ..._config._getPolicyList({ controller: ctrlName, method: methodName }),
           ...Hooks._getHookList({ controller: ctrlName, method: methodName }),
           method,
         );
@@ -28,33 +28,38 @@ module.exports = function setupApp() {
 
     router.get(
       `/${controllerName}`,
+      ..._config._getPolicyList({ controller: ctrlName, method: 'find' }),
       ...Hooks._getHookList({ controller: ctrlName, method: 'find' }),
-      controller.find || koaNotImplemented,
+      controller.find || notImplemented,
     );
     router.get(
       `/${controllerName}/:id`,
+      ..._config._getPolicyList({ controller: ctrlName, method: 'get' }),
       ...Hooks._getHookList({ controller: ctrlName, method: 'get' }),
-      controller.get || koaNotImplemented,
+      controller.get || notImplemented,
     );
     router.post(
       `/${controllerName}`,
+      ..._config._getPolicyList({ controller: ctrlName, method: 'create' }),
       ...Hooks._getHookList({ controller: ctrlName, method: 'create' }),
-      controller.create || koaNotImplemented,
+      controller.create || notImplemented,
     );
     router.put(
       `/${controllerName}/:id`,
+      ..._config._getPolicyList({ controller: ctrlName, method: 'update' }),
       ...Hooks._getHookList({ controller: ctrlName, method: 'update' }),
-      controller.update || koaNotImplemented,
+      controller.update || notImplemented,
     );
     router.del(
       `/${controllerName}/:id`,
+      ..._config._getPolicyList({ controller: ctrlName, method: 'delete' }),
       ...Hooks._getHookList({ controller: ctrlName, method: 'delete' }),
-      controller.delete || koaNotImplemented,
+      controller.delete || notImplemented,
     );
   });
 
   // load middleware
-  app.use.call(app, ...middleware);
+  app.use.call(app, ..._config.middleware);
 
   app.use(router.routes());
 

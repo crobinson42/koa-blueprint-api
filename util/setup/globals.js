@@ -55,4 +55,5 @@ module.exports = function setupGlobals() {
   loadGlobals('Models', getDirFileList('./api/models'));
   loadGlobals('Policies', getDirFileList('./api/policies'));
   loadGlobals('Services', getDirFileList('./api/services'));
+  loadGlobals('_config', getDirFileList('./config'));
 };

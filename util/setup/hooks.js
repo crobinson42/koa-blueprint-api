@@ -1,5 +1,5 @@
 /* global Hooks */
-const debug = require('debug')('Hooks');
+const debug = require('debug')('setup:hooks');
 
 module.exports = function setupHooks() {
   // register Hooks helper method
