@@ -54,7 +54,7 @@ module.exports = function setupPolicies() {
       }
 
       const policy = getPolicyValue(controller, method);
-      console.log(controller, policy);
+
       // first look for explicit controller.method policies
       addPolicy(policy, policies);
       // if no specific policies were added, look for wildcards next

@@ -5,6 +5,7 @@ require('dotenv-flow').config();
 require('./globals')();
 require('./hooks')();
 require('./policies')();
+
 const app = require('./app')();
 
 module.exports = app;

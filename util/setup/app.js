@@ -20,7 +20,10 @@ module.exports = function setupApp() {
       .forEach(([methodName, method]) => {
         router.all(
           `/${controllerName}/${methodName}`,
-          ..._config._getPolicyList({ controller: ctrlName, method: methodName }),
+          ..._config._getPolicyList({
+            controller: ctrlName,
+            method: methodName,
+          }),
           ...Hooks._getHookList({ controller: ctrlName, method: methodName }),
           method,
         );

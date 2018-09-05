@@ -1,5 +1,6 @@
 const Ajv = require('ajv');
-const ajv = new Ajv({allErrors: true});
+
+const ajv = new Ajv({ allErrors: true });
 
 const schema = {
   $schema: 'http://json-schema.org/draft-07/schema#',

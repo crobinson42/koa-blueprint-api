@@ -13,7 +13,12 @@ module.exports = {
     ctx.body = { id: ctx.params.id, name: 'cory' };
   },
 
+  async update(ctx) {
+    ctx.body = { id: ctx.params.id, name: 'updated!' };
+  },
+
   test(ctx) {
-    ctx.body = 'test';
+    console.log('ctx.query', ctx.query)
+    ctx.body = 'user/test routes, boom shakalacka';
   },
 };

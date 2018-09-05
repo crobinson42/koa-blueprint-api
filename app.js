@@ -1,3 +1,5 @@
+// todo: add https://www.npmjs.com/package/command-line-args
+
 const chalk = require('chalk');
 // setup our app framework
 const app = require('./util/setup');
