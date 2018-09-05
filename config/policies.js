@@ -1,9 +1,9 @@
 module.exports = {
-  '*': 'jwt',
+  '*': true,
   organization: {
-    '*': false,
+    '*': 'jwt',
   },
   user: {
-    create: 'isAdmin',
+    create: ['isAdmin'],
   },
 };

@@ -1,7 +1,7 @@
 module.exports = {
   locked(ctx) {
     ctx.status = 423;
-    ctx.body = 'locked';
+    ctx.body = 'blocked';
   },
   notImplemented(ctx) {
     console.log(`NOT IMPLEMENTED - ${ctx.method} ${ctx.url}`);

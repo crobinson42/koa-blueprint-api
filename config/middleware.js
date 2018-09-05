@@ -5,7 +5,7 @@ module.exports = [
   // req logger
   (ctx, next) => {
     console.log(`${ctx.method} ${ctx.url}`);
-    next();
+    return next();
   },
 
   koaBody({
