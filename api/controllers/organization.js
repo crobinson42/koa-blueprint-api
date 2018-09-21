@@ -12,4 +12,8 @@ module.exports = {
   async get(ctx) {
     ctx.body = { id: ctx.params.id, name: 'Company Name' };
   },
+
+  test(ctx) {
+    ctx.body = 'woohoo you were here!'
+  }
 };

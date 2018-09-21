@@ -20,43 +20,43 @@ module.exports = function setupApp() {
       .forEach(([methodName, method]) => {
         router.all(
           `/${controllerName}/${methodName}`,
-          ..._config._getPolicyList({
+          ..._config._getControllerMethodPolicyList({
             controller: ctrlName,
             method: methodName,
           }),
-          ...Hooks._getHookList({ controller: ctrlName, method: methodName }),
+          ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: methodName }),
           method,
         );
       });
 
     router.get(
       `/${controllerName}`,
-      ..._config._getPolicyList({ controller: ctrlName, method: 'find' }),
-      ...Hooks._getHookList({ controller: ctrlName, method: 'find' }),
+      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'find' }),
+      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'find' }),
       controller.find || notImplemented,
     );
     router.get(
       `/${controllerName}/:id`,
-      ..._config._getPolicyList({ controller: ctrlName, method: 'get' }),
-      ...Hooks._getHookList({ controller: ctrlName, method: 'get' }),
+      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'get' }),
+      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'get' }),
       controller.get || notImplemented,
     );
     router.post(
       `/${controllerName}`,
-      ..._config._getPolicyList({ controller: ctrlName, method: 'create' }),
-      ...Hooks._getHookList({ controller: ctrlName, method: 'create' }),
+      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'create' }),
+      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'create' }),
       controller.create || notImplemented,
     );
     router.put(
       `/${controllerName}/:id`,
-      ..._config._getPolicyList({ controller: ctrlName, method: 'update' }),
-      ...Hooks._getHookList({ controller: ctrlName, method: 'update' }),
+      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'update' }),
+      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'update' }),
       controller.update || notImplemented,
     );
     router.del(
       `/${controllerName}/:id`,
-      ..._config._getPolicyList({ controller: ctrlName, method: 'delete' }),
-      ...Hooks._getHookList({ controller: ctrlName, method: 'delete' }),
+      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'delete' }),
+      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'delete' }),
       controller.delete || notImplemented,
     );
   });

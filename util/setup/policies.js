@@ -1,29 +1,29 @@
 /* global _config, Policies */
-const debug = require('debug')('setup:policies');
-const _ = require('lodash');
-const { locked } = require('../responses');
+const debug = require("debug")("setup:policies");
+const _ = require("lodash");
+const { locked } = require("../responses");
 
 function addPolicy(policy, list) {
   switch (typeof policy) {
-    case 'function':
+    case "function":
       list.push(policy);
       break;
-    case 'object': // array
+    case "object": // array
       if (Array.isArray(policy)) {
         list.push(
-          ...policy.map((p) => {
+          ...policy.map(p => {
             if (Policies[p]) return Policies[p];
             throw new Error(`Policy does not exist: ${p}`);
-          }),
+          })
         );
       }
       break;
-    case 'boolean':
+    case "boolean":
       if (!policy) {
         list.push(locked);
       }
       break;
-    case 'string':
+    case "string":
       if (Policies[policy]) {
         list.push(Policies[policy]);
       } else {
@@ -37,52 +37,63 @@ function addPolicy(policy, list) {
   return list;
 }
 
+// Check if a controller has a policy wild card
+function controllerHasWildCard(controller) {
+  return (
+    _config.policies[controller] &&
+    Object.prototype.hasOwnProperty.call(_config.policies[controller], "*")
+  );
+}
+
 function getPolicyValue(controller, method) {
-  return _.get(_config.policies, `${controller}.${method}`, undefined);
+  return _.get(_config.policies, `[${controller}][${method}]`, undefined);
+}
+
+// check if the top level policies object has a wildcard
+function policyTopLevelHasWildCard() {
+  return (
+    _config.policies &&
+    Object.prototype.hasOwnProperty.call(_config.policies, "*")
+  );
 }
 
 module.exports = function setupPolicies() {
-  // Convenience helper method to get policies for a controller/method
-  Object.defineProperty(global._config, '_getPolicyList', {
-    enumerable: false,
-    value: ({ controller, method }) => {
-      const policies = [];
+  function getControllerMethodPolicyList({ controller, method }) {
+    const policies = [];
 
-      if (!_config.policies || typeof _config.policies !== 'object') {
-        debug('config/policies.js does not exist or is not exporting an object');
-        return policies;
-      }
-
-      const policy = getPolicyValue(controller, method);
-
-      // first look for explicit controller.method policies
-      addPolicy(policy, policies);
-      // if no specific policies were added, look for wildcards next
-      if (!policies.length) {
-        if (
-          _config.policies[controller]
-          && Object.prototype.hasOwnProperty.call(
-            _config.policies[controller],
-            '*',
-          )
-        ) {
-          // first check controller level wildcards
-          addPolicy(_config.policies[controller]['*'], policies);
-        } else if (
-          _config.policies
-          && Object.prototype.hasOwnProperty.call(_config.policies, '*')
-        ) {
-          // then check for top level wildcards last
-          addPolicy(_config.policies['*'], policies);
-        }
-      }
-
-      if (policies.length) {
-        debug(`Loaded ${policies.length} Policies for ${controller}.${method}`);
-      }
-
+    // check if policies exist or return early
+    if (!_config.policies || typeof _config.policies !== "object") {
+      debug("config/policies.js does not exist or is not exporting an object");
       return policies;
-    },
-    writable: false,
+    }
+
+    // first look for explicit controller.method policies
+    if (getPolicyValue(controller, method) !== undefined) {
+      addPolicy(getPolicyValue(controller, method), policies);
+    }
+    // if no specific policies were added, look for wildcards next
+    else {
+      if (controllerHasWildCard(controller)) {
+        // first check controller level wildcards
+        addPolicy(_config.policies[controller]["*"], policies);
+      } else if (policyTopLevelHasWildCard()) {
+        // then check for top level wildcards last
+        addPolicy(_config.policies["*"], policies);
+      }
+    }
+
+    if (policies.length) {
+      debug(`Loaded ${policies.length} Policies for ${controller}.${method}`);
+      debug(`   ${controller}.${method} policies:`, policies);
+    }
+
+    return policies;
+  }
+
+  // Convenience helper method to get policies for a controller/method
+  Object.defineProperty(global._config, "_getControllerMethodPolicyList", {
+    enumerable: false,
+    value: getControllerMethodPolicyList,
+    writable: false
   });
 };
