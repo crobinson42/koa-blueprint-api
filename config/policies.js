@@ -4,7 +4,9 @@ module.exports = {
     '*': 'jwt',
     test: true,
   },
+  region: false,
   user: {
     create: ['isAdmin'],
+    destroy: false,
   },
 };

@@ -12,8 +12,6 @@
 module.exports = [
   require('koa-logger')(),
   require('koa-useragent'),
-  // health - https://github.com/AlexeyKhristov/koa-ping
-  require('koa-ping')('/health'),
   // (ctx, next) => {
   //   console.log(`${ctx.method} ${ctx.url}`);
   //   return next();

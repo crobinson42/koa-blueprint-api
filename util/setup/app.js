@@ -15,7 +15,7 @@ module.exports = function setupApp() {
     Object.entries(controller)
       // order matters - add these CRUD methods after custom named methods
       .filter(
-        ([key]) => !['find', 'get', 'create', 'update', 'delete'].includes(key),
+        ([key]) => !['find', 'get', 'create', 'update', 'destroy'].includes(key),
       )
       .forEach(([methodName, method]) => {
         router.all(
@@ -55,16 +55,17 @@ module.exports = function setupApp() {
     );
     router.del(
       `/${controllerName}/:id`,
-      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'delete' }),
-      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'delete' }),
-      controller.delete || notImplemented,
+      ..._config._getControllerMethodPolicyList({ controller: ctrlName, method: 'destroy' }),
+      ...Hooks._getControllerMethodHookList({ controller: ctrlName, method: 'destroy' }),
+      controller.destroy || notImplemented,
     );
   });
 
   // load middleware
-  app.use.call(app, ..._config.middleware);
-
+  if (Array.isArray(_config.middleware)) {
+    _config.middleware.forEach(middleware => app.use(middleware))
+  }
+  
   app.use(router.routes());
-
   return app;
 };

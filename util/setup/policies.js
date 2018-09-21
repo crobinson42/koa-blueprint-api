@@ -1,6 +1,8 @@
 /* global _config, Policies */
 const debug = require("debug")("setup:policies");
 const _ = require("lodash");
+const isObject = require('isobject');
+
 const { locked } = require("../responses");
 
 function addPolicy(policy, list) {
@@ -45,7 +47,11 @@ function controllerHasWildCard(controller) {
   );
 }
 
-function getPolicyValue(controller, method) {
+function getControllerPolicyValue(controller) {
+  return _.get(_config.policies, `[${controller}]`, undefined);
+}
+
+function getControllerMethodPolicyValue(controller, method) {
   return _.get(_config.policies, `[${controller}][${method}]`, undefined);
 }
 
@@ -66,10 +72,15 @@ module.exports = function setupPolicies() {
       debug("config/policies.js does not exist or is not exporting an object");
       return policies;
     }
+    // check if controller has policy rule for all methods (ie: is not an object)
+    else if (!isObject(getControllerPolicyValue(controller))) {
+      addPolicy(getControllerPolicyValue(controller), policies);
+      return policies;
+    }
 
     // first look for explicit controller.method policies
-    if (getPolicyValue(controller, method) !== undefined) {
-      addPolicy(getPolicyValue(controller, method), policies);
+    if (getControllerMethodPolicyValue(controller, method) !== undefined) {
+      addPolicy(getControllerMethodPolicyValue(controller, method), policies);
     }
     // if no specific policies were added, look for wildcards next
     else {
