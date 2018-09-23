@@ -13,9 +13,8 @@ const schema = {
   // required: ["last"]
 };
 
-Services.store.defineMapper({
-  name: "user",
-  schema
+Services.store.defineMapper("user",{
+  // schema,
 });
 
 module.exports = Services.store.getMapper("user");

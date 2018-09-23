@@ -12,9 +12,8 @@ const schema = {
   required: []
 };
 
-Services.store.defineMapper({
-  name: "organization",
-  schema
+Services.store.defineMapper("organization",{
+  // schema,
 });
 
 module.exports = Services.store.getMapper("organization");

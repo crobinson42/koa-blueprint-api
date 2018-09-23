@@ -1,7 +1,7 @@
 module.exports = {
   '*': true,
   organization: {
-    '*': 'jwt',
+    // '*': 'jwt',
     test: true,
   },
   region: false,
