@@ -3,7 +3,7 @@ const Koa = require("koa");
 const Router = require("koa-router");
 const { notImplemented } = require("../responses");
 
-module.exports = function setupApp() {
+module.exports = function setupApp(opts = {}) {
   const app = new Koa();
   const router = new Router();
 
@@ -13,7 +13,7 @@ module.exports = function setupApp() {
 
     // add non CRUD controller methods
     Object.entries(controller)
-      // order matters - add CRUD methods after custom named methods
+    // order matters - add CRUD methods after custom named methods
       .filter(
         ([key]) => !["find", "get", "create", "update", "destroy"].includes(key)
       )
