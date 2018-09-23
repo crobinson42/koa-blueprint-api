@@ -1,21 +1,20 @@
 // schema is optional
 const schema = {
   $schema: "http://json-schema.org/draft-07/schema#",
-  title: "user",
-  description: "A User",
+  title: "region",
+  description: "An Organization Region",
 
   properties: {
     id: "string",
-    name: { type: "string" },
-    last: "string"
+    name: { type: "string" }
   },
 
-  // required: ["last"]
+  required: []
 };
 
 Services.store.defineMapper({
-  name: "user",
+  name: "region",
   schema
 });
 
-module.exports = Services.store.getMapper("user");
+module.exports = Services.store.getMapper("region");

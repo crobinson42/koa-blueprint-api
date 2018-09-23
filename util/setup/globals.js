@@ -48,12 +48,18 @@ function getDirFileList(dirPath) {
   }
 }
 
+// load/register globals from /api dir
 module.exports = function setupGlobals() {
-  // load/register globals from /api dir
-  loadGlobals('Controllers', getDirFileList('./api/controllers'));
-  loadGlobals('Hooks', getDirFileList('./api/hooks'));
+  /**
+   ****** ORDER MATTERS ******
+   * Do NOT change order - app
+   * and controllers relies on
+   * this order of loading
+   */
+  loadGlobals('_config', getDirFileList('./config'));
+  loadGlobals('Services', getDirFileList('./api/services'));
   loadGlobals('Models', getDirFileList('./api/models'));
   loadGlobals('Policies', getDirFileList('./api/policies'));
-  loadGlobals('Services', getDirFileList('./api/services'));
-  loadGlobals('_config', getDirFileList('./config'));
+  loadGlobals('Hooks', getDirFileList('./api/hooks'));
+  loadGlobals('Controllers', getDirFileList('./api/controllers'));
 };

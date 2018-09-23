@@ -1,38 +1,39 @@
 {
-  "name": "koa-app",
+  "name": "@amso/koa-rest-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A KOA.js REST API Server with auto-routing and configurations",
   "main": "index.js",
   "scripts": {
     "dev": "DEBUG=*,-koa*,-nodemon* nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["api","rest","koa"],
+  "author": "coryrobinson42@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "ajv": "^6.5.3",
+    "@koa/cors": "^2.2.2",
+    "bson": "^3.0.2",
     "chalk": "^2.4.1",
     "debug": "^3.1.0",
     "dotenv-flow": "^0.1.0",
     "isobject": "^3.0.1",
-    "jsonwebtoken": "^8.3.0",
+    "js-data": "^3.0.3",
+    "js-data-mongodb": "^2.0.0",
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
     "koa-jwt": "^3.3.2",
     "koa-logger": "^3.2.0",
-    "koa-mount": "^3.0.0",
-    "koa-ping": "^0.1.1",
     "koa-router": "^7.4.0",
     "koa-useragent": "^1.1.0",
     "lodash": "^4.17.10",
-    "supports-color": "^5.5.0"
+    "mongodb": "^3.1.6"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "supports-color": "^5.5.0"
   }
 }

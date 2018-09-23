@@ -6,7 +6,7 @@ module.exports = {
   },
   region: false,
   user: {
-    create: ['isAdmin'],
+    // create: ['jwt', 'isAdmin'],
     destroy: false,
   },
 };
