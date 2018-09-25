@@ -1,5 +1,7 @@
 const { Mapper } = require("js-data");
 
+// todo: see examples: https://github.com/js-data/js-data-examples/blob/master/server/src/middleware.js
+
 module.exports = function jsDataCRUD(jsDataMapper) {
   const mapper =
     (typeof jsDataMapper === "string" && Models[jsDataMapper]) || jsDataMapper;
