@@ -7,7 +7,11 @@
     "dev": "DEBUG=*,-koa*,-nodemon* nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["api","rest","koa"],
+  "keywords": [
+    "api",
+    "rest",
+    "koa"
+  ],
   "author": "coryrobinson42@gmail.com",
   "license": "ISC",
   "dependencies": {
@@ -23,10 +27,13 @@
     "koa-body": "^4.0.4",
     "koa-jwt": "^3.3.2",
     "koa-logger": "^3.2.0",
+    "koa-qs": "^2.0.0",
     "koa-router": "^7.4.0",
     "koa-useragent": "^1.1.0",
     "lodash": "^4.17.10",
-    "mongodb": "^3.1.6"
+    "mongodb": "^3.1.6",
+    "qs": "^6.5.2",
+    "query-string": "^6.1.0"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
