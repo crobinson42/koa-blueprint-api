@@ -5,6 +5,8 @@ and controllers based on the directory structure. Provides `globals` as
 convenience to easily access `Models`, & `Services`. Also provides _hooks_ 
 to run before and after controller methods.
 
+> Debug using `DEBUG=kba* node app.js`
+
 ## Example
 
 The `example` directory is a working sample of the layout and can be 
