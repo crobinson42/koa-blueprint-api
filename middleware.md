@@ -32,3 +32,24 @@ module.exports = [
 ];
 
 ```
+
+### Common Middleware
+
+This package exports common middleware to be used. 
+
+Example use:
+
+```
+// config/middleware.js
+
+const { getCommonMiddleware } = require('koa-blueprint-api');
+
+const commonMiddlewareOpts = {}; // optional
+
+module.exports = [
+  ...getCommonMiddleware(commonMiddlewareOpts),
+  
+  // add your own middlware here
+  (ctx, next) => { ... }
+];
+```
