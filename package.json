@@ -2,7 +2,7 @@
   "name": "koa-blueprint-api",
   "version": "1.0.5",
   "description": "A KOA.js REST API Server with auto-routing and configurations",
-  "main": ".setup/index.js",
+  "main": "index.js",
   "scripts": {
     "example": "DEBUG=kba* nodemon example/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,18 +15,24 @@
   "author": "coryrobinson42@gmail.com",
   "license": "ISC",
   "files": [
-    ".setup"
+    "index.js",
+    "middleware",
+    "setup"
   ],
   "dependencies": {
     "debug": "^3.1.0",
     "dotenv-flow": "^0.1.0",
     "isobject": "^3.0.1",
     "koa": "^2.5.2",
+    "@koa/cors": "^2.2.2",
     "koa-router": "^7.4.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "koa-body": "^4.0.4",
+    "koa-logger": "^3.2.0",
+    "koa-useragent": "^1.1.0",
+    "qs": "^6.5.2"
   },
   "devDependencies": {
-    "@koa/cors": "^2.2.2",
     "bson": "^3.0.2",
     "chalk": "^2.4.1",
     "eslint": "^5.4.0",
@@ -37,13 +43,9 @@
     "js-data": "^3.0.3",
     "js-data-adapter": "^0.8.5",
     "js-data-mongodb": "^2.0.0",
-    "koa-body": "^4.0.4",
     "koa-jwt": "^3.3.2",
-    "koa-logger": "^3.2.0",
-    "koa-useragent": "^1.1.0",
     "lodash.snakecase": "^4.1.1",
     "mongodb": "^3.1.6",
-    "qs": "^6.5.2",
     "supports-color": "^5.5.0"
   }
 }

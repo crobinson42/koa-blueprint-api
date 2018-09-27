@@ -1,8 +1,8 @@
 /* global _config, Controllers, Hooks */
-const debug = require("debug")("kba:setup:app");
-const Koa = require("koa");
-const Router = require("koa-router");
-const { notImplemented } = require("../util/responses");
+const debug = require('debug')('kba:setup:app');
+const Koa = require('koa');
+const Router = require('koa-router');
+const { notImplemented } = require('../util/responses');
 
 
 module.exports = function setupApp(opts = {}) {
@@ -13,7 +13,7 @@ module.exports = function setupApp(opts = {}) {
   const router = new Router();
   debug('koa-router initialized');
 
-  debug(`loading Controllers routes to koa-router`);
+  debug('loading Controllers routes to koa-router');
   // load controller routes on koa-router
   Object.entries(Controllers).forEach(([ctrlName, controller]) => {
     debug(`loading Controller "${ctrlName}" routes`);
@@ -23,112 +23,112 @@ module.exports = function setupApp(opts = {}) {
     Object.entries(controller)
     // order matters - add CRUD methods after custom named methods
       .filter(
-        ([key]) => !["find", "get", "create", "update", "destroy"].includes(key)
+        ([key]) => !['find', 'get', 'create', 'update', 'destroy'].includes(key),
       )
       .forEach(([methodName, method]) => {
         debug(`   loading ${methodName}`);
         const ctrlMthdCustomRouteConfigList = _config._getControllerMethodCustomRouteList({
           controller: ctrlName,
-          method: methodName
+          method: methodName,
         });
         const methodMiddleware = [
           ..._config._getControllerMethodPolicyList({
             controller: ctrlName,
-            method: methodName
+            method: methodName,
           }),
           ...Hooks._getControllerMethodHookList({
             controller: ctrlName,
-            method: methodName
-          })
+            method: methodName,
+          }),
         ];
 
         // if a route(s) is defined for this controller.method - use it
         if (ctrlMthdCustomRouteConfigList) {
           // we get back a list since a method can have multiple custom routes defined
-          ctrlMthdCustomRouteConfigList.forEach(route => {
-            const routerMethod = (route.method || "all").toLocaleLowerCase();
+          ctrlMthdCustomRouteConfigList.forEach((route) => {
+            const routerMethod = (route.method || 'all').toLocaleLowerCase();
             router[routerMethod](
               route.path,
               ...methodMiddleware,
-              method
+              method,
             );
-          })
+          });
         } else {
           // if no route is defined, default to all http methods for controller.method
           router.all(
             `/${controllerName}/${methodName}`,
             ...methodMiddleware,
-            method
+            method,
           );
         }
       });
 
     // todo: currently not implementing CRUD methods custom routing from config/routes.js
-    debug(`   loading CRUD routes`);
+    debug('   loading CRUD routes');
     router.get(
       `/${controllerName}`,
       ..._config._getControllerMethodPolicyList({
         controller: ctrlName,
-        method: "find"
+        method: 'find',
       }),
       ...Hooks._getControllerMethodHookList({
         controller: ctrlName,
-        method: "find"
+        method: 'find',
       }),
-      controller.find || notImplemented
+      controller.find || notImplemented,
     );
     router.get(
       `/${controllerName}/:id`,
       ..._config._getControllerMethodPolicyList({
         controller: ctrlName,
-        method: "get"
+        method: 'get',
       }),
       ...Hooks._getControllerMethodHookList({
         controller: ctrlName,
-        method: "get"
+        method: 'get',
       }),
-      controller.get || notImplemented
+      controller.get || notImplemented,
     );
     router.post(
       `/${controllerName}`,
       ..._config._getControllerMethodPolicyList({
         controller: ctrlName,
-        method: "create"
+        method: 'create',
       }),
       ...Hooks._getControllerMethodHookList({
         controller: ctrlName,
-        method: "create"
+        method: 'create',
       }),
-      controller.create || notImplemented
+      controller.create || notImplemented,
     );
     router.put(
       `/${controllerName}/:id`,
       ..._config._getControllerMethodPolicyList({
         controller: ctrlName,
-        method: "update"
+        method: 'update',
       }),
       ...Hooks._getControllerMethodHookList({
         controller: ctrlName,
-        method: "update"
+        method: 'update',
       }),
-      controller.update || notImplemented
+      controller.update || notImplemented,
     );
     router.del(
       `/${controllerName}/:id`,
       ..._config._getControllerMethodPolicyList({
         controller: ctrlName,
-        method: "destroy"
+        method: 'destroy',
       }),
       ...Hooks._getControllerMethodHookList({
         controller: ctrlName,
-        method: "destroy"
+        method: 'destroy',
       }),
-      controller.destroy || notImplemented
+      controller.destroy || notImplemented,
     );
   });
-  debug(`all controller routes loaded`);
+  debug('all controller routes loaded');
 
-  debug(`loading middleware`);
+  debug('loading middleware');
   // load middleware
   if (Array.isArray(_config.middleware)) {
     _config.middleware.forEach(middleware => app.use(middleware));

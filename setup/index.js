@@ -1,4 +1,4 @@
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const debug = require('debug')('kba:setup');
 
 /**
@@ -12,11 +12,11 @@ const debug = require('debug')('kba:setup');
 module.exports = function setupApp(opts = {}) {
   debug(`options ${JSON.stringify(opts)}`);
 
-  require("dotenv-flow").config({ cwd: opts.root });
+  require('dotenv-flow').config({ cwd: opts.root });
 
   debug('initializing globals');
   // Order matters - run all setup/helper initialization
-  require("./setup/globals")({ ...opts.globals, root: opts.root });
+  require('./setup/globals')({ ...opts.globals, root: opts.root });
   debug('globals initialized');
 
   debug('initializing helpers');
@@ -26,7 +26,7 @@ module.exports = function setupApp(opts = {}) {
 
   debug('initializing app');
   // Setup app
-  const app = require("./setup/app")(opts.app);
+  const app = require('./setup/app')(opts.app);
   debug('app initialized');
 
   return app;
