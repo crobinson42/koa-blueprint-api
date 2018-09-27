@@ -1,5 +1,5 @@
 /* global _config, Policies */
-const debug = require("debug")("setup:helper:routes");
+const debug = require("debug")("kba:setup:helper:routes");
 const _ = require("lodash");
 const isObject = require("isobject");
 

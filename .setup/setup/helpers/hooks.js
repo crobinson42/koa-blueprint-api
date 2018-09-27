@@ -1,5 +1,5 @@
 /* global Hooks */
-const debug = require('debug')('setup:helper:hooks');
+const debug = require('debug')('kba:setup:helper:hooks');
 
 module.exports = function setupHooks() {
   // register Hooks helper method

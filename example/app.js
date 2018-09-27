@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 // setup our app/framework
-const app = require('./.setup/index')();
+const app = require('../.setup/index')({ root: __dirname });
 
 // require('koa-qs')(app);
 

@@ -1,5 +1,5 @@
 /* global _config, Policies */
-const debug = require("debug")("setup:helper:policies");
+const debug = require("debug")("kba:setup:helper:policies");
 const _ = require("lodash");
 const isObject = require('isobject');
 

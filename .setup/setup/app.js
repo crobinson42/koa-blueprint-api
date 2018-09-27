@@ -1,15 +1,22 @@
 /* global _config, Controllers, Hooks */
+const debug = require("debug")("kba:setup:app");
 const Koa = require("koa");
 const Router = require("koa-router");
 const { notImplemented } = require("../util/responses");
 
 
 module.exports = function setupApp(opts = {}) {
-  const app = new Koa();
-  const router = new Router();
+  debug('running "setupApp()"');
 
+  const app = new Koa();
+  debug('koa initialized');
+  const router = new Router();
+  debug('koa-router initialized');
+
+  debug(`loading Controllers routes to koa-router`);
   // load controller routes on koa-router
   Object.entries(Controllers).forEach(([ctrlName, controller]) => {
+    debug(`loading Controller "${ctrlName}" routes`);
     const controllerName = ctrlName.toLowerCase();
 
     // add non CRUD controller methods
@@ -19,6 +26,7 @@ module.exports = function setupApp(opts = {}) {
         ([key]) => !["find", "get", "create", "update", "destroy"].includes(key)
       )
       .forEach(([methodName, method]) => {
+        debug(`   loading ${methodName}`);
         const ctrlMthdCustomRouteConfigList = _config._getControllerMethodCustomRouteList({
           controller: ctrlName,
           method: methodName
@@ -56,7 +64,7 @@ module.exports = function setupApp(opts = {}) {
       });
 
     // todo: currently not implementing CRUD methods custom routing from config/routes.js
-
+    debug(`   loading CRUD routes`);
     router.get(
       `/${controllerName}`,
       ..._config._getControllerMethodPolicyList({
@@ -118,7 +126,9 @@ module.exports = function setupApp(opts = {}) {
       controller.destroy || notImplemented
     );
   });
+  debug(`all controller routes loaded`);
 
+  debug(`loading middleware`);
   // load middleware
   if (Array.isArray(_config.middleware)) {
     _config.middleware.forEach(middleware => app.use(middleware));
