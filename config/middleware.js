@@ -1,14 +1,6 @@
 /* eslint-disable global-require */
 const qs = require('qs');
 
-// todo: add https://github.com/koajs/compress
-// todo: add https://github.com/koajs/send
-// todo: add https://github.com/venables/koa-helmet
-// todo: add https://github.com/koajs/ratelimit
-// todo: just in case https://github.com/koajs/rewrite
-
-// todo: replace ? https://github.com/tunnckoCore/koa-better-body
-
 // koa middleware applied in order
 module.exports = [
   require('koa-logger')(),

@@ -1,7 +1,8 @@
 /* global _config, Controllers, Hooks */
 const Koa = require("koa");
 const Router = require("koa-router");
-const { notImplemented } = require("../responses");
+const { notImplemented } = require("../util/responses");
+
 
 module.exports = function setupApp(opts = {}) {
   const app = new Koa();

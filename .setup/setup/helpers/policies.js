@@ -3,7 +3,7 @@ const debug = require("debug")("setup:helper:policies");
 const _ = require("lodash");
 const isObject = require('isobject');
 
-const { locked } = require("../../responses");
+const { locked } = require("../../util/responses");
 
 module.exports = function setupPolicies() {
   // Convenience helper method to get policies for a controller/method
