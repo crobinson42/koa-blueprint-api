@@ -2,6 +2,7 @@
 // common middleware
 const qs = require('qs');
 
+// eslint-disable-next-line no-unused-vars
 module.exports = (opts = {}) => [
   require('koa-logger')(),
   require('koa-useragent'),
