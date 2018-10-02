@@ -7,6 +7,9 @@
     "example": "DEBUG=kba* nodemon example/app.js",
     "test": "eslint --fix */**.js"
   },
+  "pre-commit": [
+    "test"
+  ],
   "keywords": [
     "api",
     "rest",
@@ -34,17 +37,18 @@
     "qs": "^6.5.2"
   },
   "devDependencies": {
-    "eslint-config-americansoftware": "^1.0.0",
-    "prettier-config-americansoftware": "^1.0.0",
     "bson": "^3.0.2",
     "chalk": "^2.4.1",
     "eslint": "^5.4.0",
+    "eslint-config-americansoftware": "^1.0.0",
     "js-data": "^3.0.4",
     "js-data-adapter": "^0.8.5",
     "js-data-mongodb": "^2.0.0",
     "koa-jwt": "^3.3.2",
     "lodash.snakecase": "^4.1.1",
     "mongodb": "^3.1.6",
+    "pre-commit": "^1.2.2",
+    "prettier-config-americansoftware": "^1.0.0",
     "supports-color": "^5.5.0"
   }
 }
