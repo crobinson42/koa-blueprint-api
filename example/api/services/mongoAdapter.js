@@ -22,7 +22,8 @@ const DEFAULTS = {
    */
   translateObjectIDs: false,
 
-  // swap the _id for id prop on all records
+  // swap the _id for id prop on all returned records
+  // & swap id for _id on incoming operations
   swapIdAttribute: true,
   // force all mappers that don't already declare an id attribute to use _id
   // so that the mapper can operate on `id` without concern of how mongo uses _id
@@ -127,7 +128,7 @@ function MongoDBAdapter(opts) {
 
     _opts: {
       writable: false,
-      value: opts,
+      value: opts
     }
   });
 
@@ -216,6 +217,7 @@ Adapter.extend({
   _getIdAttribute(mapper, opts) {
     if (this.getOpt("castMapperNormalIdAttribute", opts)) {
       if (mapper.idAttribute === "id") return "_id";
+      else return mapper.idAttribute;
     }
   },
 

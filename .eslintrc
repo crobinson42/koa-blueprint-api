@@ -1,5 +1,5 @@
 {
-  "extends": "americansoftware",
+  "extends": "americansoftware/node",
   "rules": {
     "global-require": "off"
   }

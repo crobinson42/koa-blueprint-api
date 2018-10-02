@@ -10,6 +10,7 @@ module.exports = (opts = {}) => [
   require('koa-body')({
     // jsonLimit: `${process.env.MAX_REQ_BODY_SIZE_KB}kb`, // default 1mb
   }),
+  require('koa-respond'),
 
   // query string nesting is not supported out of the box because there's no spec
   // we use the qs lib if a querystring is on the request

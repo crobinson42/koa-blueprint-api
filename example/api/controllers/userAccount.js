@@ -1,10 +1,10 @@
 const qs = require('qs');
 
 module.exports = {
-  ...Services.JSDataCRUD('user'),
+  ...Services.JSDataCRUD('userAccount'),
 
   test(ctx) {
     // ctx.body = 'test'
-    ctx.body = `user.test() :option = ${ctx.params.id}`;
+    ctx.body = `userAccount.test() :option = ${ctx.params.id}`;
   },
 };
