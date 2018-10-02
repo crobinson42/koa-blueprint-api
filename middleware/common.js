@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 // common middleware
-const qs = require('qs');
+const qs = require('qs')
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (opts = {}) => [
@@ -10,7 +10,7 @@ module.exports = (opts = {}) => [
   require('koa-body')({
     // jsonLimit: `${process.env.MAX_REQ_BODY_SIZE_KB}kb`, // default 1mb
   }),
-  require('koa-respond'),
+  require('koa-respond')(),
 
   // query string nesting is not supported out of the box because there's no spec
   // we use the qs lib if a querystring is on the request
@@ -20,12 +20,12 @@ module.exports = (opts = {}) => [
         configurable: true,
         value: qs.parse(ctx.querystring),
         writable: false,
-      };
-      Object.defineProperty(ctx, 'query', def);
-      Object.defineProperty(ctx.request, 'query', def);
+      }
+      Object.defineProperty(ctx, 'query', def)
+      Object.defineProperty(ctx.request, 'query', def)
     }
 
-    return next();
+    return next()
   },
 
   // Patch request query to be an object for operating on it as an Object
@@ -37,12 +37,12 @@ module.exports = (opts = {}) => [
       const def = {
         value: { ...ctx.request.query },
         writable: false,
-      };
-      Object.defineProperty(ctx.request, 'query', def);
-      Object.defineProperty(ctx, 'query', def);
+      }
+      Object.defineProperty(ctx.request, 'query', def)
+      Object.defineProperty(ctx, 'query', def)
     }
 
-    return next();
+    return next()
   },
 
   // JS-Data querystring's contain JSON.stringified "where" value
@@ -57,29 +57,29 @@ module.exports = (opts = {}) => [
             where: JSON.parse(ctx.query.where),
           },
           writable: false,
-        };
-        Object.defineProperty(ctx, 'query', def);
-        Object.defineProperty(ctx.request, 'query', def);
+        }
+        Object.defineProperty(ctx, 'query', def)
+        Object.defineProperty(ctx.request, 'query', def)
       } catch (e) {
-        throw new Error('Unable to parse "where" in querystring');
+        throw new Error('Unable to parse "where" in querystring')
       }
     }
 
-    return next();
+    return next()
   },
 
   // JS-Data throw catch
   async (ctx, next) => {
     try {
-      await next();
+      await next()
     } catch (e) {
       // JS-Data will throw on validation failure w/ an errors array & message
       if (e && e.errors) {
-        ctx.status = 422;
-        ctx.body = { message: e.message, errors: e.errors };
+        ctx.status = 422
+        ctx.body = { message: e.message, errors: e.errors }
       } else {
-        throw e;
+        throw e
       }
     }
   },
-];
+]
