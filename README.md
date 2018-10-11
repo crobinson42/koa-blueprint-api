@@ -1,5 +1,7 @@
 # koa-blueprint-api
 
+[![npm version](https://badge.fury.io/js/koa-blueprint-api.svg)](https://badge.fury.io/js/koa-blueprint-api)
+
 An automated server configuration using Koa.js that sets up your routes 
 and controllers based on the directory structure. Provides `globals` as 
 convenience to easily access `Models`, & `Services`. Also provides _hooks_ 
