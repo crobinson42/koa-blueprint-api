@@ -6,7 +6,7 @@ const qs = require('qs')
 module.exports = (opts = {}) => [
   require('koa-logger')(),
   require('koa-useragent'),
-  require('@koa/cors')(),
+  require('@koa/cors')(opts.cors),
   require('koa-body')({
     // jsonLimit: `${process.env.MAX_REQ_BODY_SIZE_KB}kb`, // default 1mb
   }),
