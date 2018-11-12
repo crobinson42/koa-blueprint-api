@@ -37,11 +37,11 @@ module.exports = (opts = {}) => [
               return parseFloat(str)
             }
 
-            let keywords = {
+            const keywords = {
               true: true,
               false: false,
               null: null,
-              undefined: undefined,
+              undefined,
             }
             if (str in keywords) {
               return keywords[str]
