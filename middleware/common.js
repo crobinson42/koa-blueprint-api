@@ -18,7 +18,43 @@ module.exports = (opts = {}) => [
     if (ctx.querystring) {
       const def = {
         configurable: true,
-        value: qs.parse(ctx.querystring),
+        value: qs.parse(ctx.querystring, {
+          allowPrototypes: true, // https://github.com/ljharb/qs#parsing-objects
+          /**
+           * we want boolean & number values to not be converted strings
+           *
+           * Extended default behavior:
+           * https://github.com/ljharb/qs/blob/master/lib/utils.js#L106
+           */
+          decoder(str, decoder, charset) {
+            const strWithoutPlus = str.replace(/\+/g, ' ');
+            if (charset === 'iso-8859-1') {
+              // unescape never throws, no try...catch needed:
+              return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+            }
+
+            if (/^(\d+|\d*\.\d+)$/.test(str)) {
+              return parseFloat(str)
+            }
+
+            let keywords = {
+              true: true,
+              false: false,
+              null: null,
+              undefined: undefined,
+            }
+            if (str in keywords) {
+              return keywords[str]
+            }
+
+            // utf-8
+            try {
+              return decodeURIComponent(strWithoutPlus);
+            } catch (e) {
+              return strWithoutPlus;
+            }
+          },
+        }),
         writable: false,
       }
       Object.defineProperty(ctx, 'query', def)
@@ -28,22 +64,23 @@ module.exports = (opts = {}) => [
     return next()
   },
 
+  // todo: remove this, we're using the qs.allowPrototype option now
   // Patch request query to be an object for operating on it as an Object
   // this is because node.js strips down the prototype for performance/speed
-  (ctx, next) => {
-    if (ctx.request.query && typeof ctx.request.query === 'object') {
-      // node.js removed the Object.prototype on querystring https://github.com/nodejs/node/pull/6055
-      // coerce query to inherit from Object.prototype
-      const def = {
-        value: { ...ctx.request.query },
-        writable: false,
-      }
-      Object.defineProperty(ctx.request, 'query', def)
-      Object.defineProperty(ctx, 'query', def)
-    }
-
-    return next()
-  },
+  // (ctx, next) => {
+  //   if (ctx.request.query && typeof ctx.request.query === 'object') {
+  //     // node.js removed the Object.prototype on querystring https://github.com/nodejs/node/pull/6055
+  //     // coerce query to inherit from Object.prototype
+  //     const def = {
+  //       value: { ...ctx.request.query },
+  //       writable: false,
+  //     }
+  //     Object.defineProperty(ctx.request, 'query', def)
+  //     Object.defineProperty(ctx, 'query', def)
+  //   }
+  //
+  //   return next()
+  // },
 
   // JS-Data querystring's contain JSON.stringified "where" value
   // we must JSON.parse them if they exist
