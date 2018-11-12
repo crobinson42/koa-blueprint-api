@@ -19,12 +19,24 @@ module.exports.loadGlobals = function loadGlobals(name, fileList = []) {
       debug(
         `Failed to load file "${fileInfo.file}" for "${name}" @ ${
           fileInfo.path
-        } ${e}`
+        } ${e}`,
       )
+      console.log(`
+      
+      Error Message:
+      
+      ${e.message}
+      `)
+      console.log(`
+      Error Stack:
+      
+      ${e.stack}
+      
+      `)
       throw new Error(
         `Failed to load file "${fileInfo.file}" for "${name}" @ ${
           fileInfo.path
-        } ${e}`
+        }`,
       )
       process.exit(1)
     }
@@ -52,8 +64,22 @@ module.exports.getDirFileList = function getDirFileList(
   } catch (e) {
     if (opts.throw) {
       debug(`Failed to read directory ${dirPath} in utils/setup.js`, e)
+
+      console.log(`
+      
+      Error Message:
+      
+      ${e.message}
+      `)
+      console.log(`
+      Error Stack:
+      
+      ${e.stack}
+      
+      `)
+
       throw new Error(
-        `Failed to read directorty ${dirPath} in utils/setup.js ${e}`
+        `Failed to read directorty ${dirPath} in utils/setup.js ${e}`,
       )
     }
 
