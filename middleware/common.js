@@ -19,7 +19,6 @@ module.exports = (opts = {}) => [
       const def = {
         configurable: true,
         value: qs.parse(ctx.querystring, {
-          allowPrototypes: true, // https://github.com/ljharb/qs#parsing-objects
           /**
            * we want boolean & number values to not be converted strings
            *
@@ -64,23 +63,22 @@ module.exports = (opts = {}) => [
     return next()
   },
 
-  // todo: remove this, we're using the qs.allowPrototype option now
   // Patch request query to be an object for operating on it as an Object
   // this is because node.js strips down the prototype for performance/speed
-  // (ctx, next) => {
-  //   if (ctx.request.query && typeof ctx.request.query === 'object') {
-  //     // node.js removed the Object.prototype on querystring https://github.com/nodejs/node/pull/6055
-  //     // coerce query to inherit from Object.prototype
-  //     const def = {
-  //       value: { ...ctx.request.query },
-  //       writable: false,
-  //     }
-  //     Object.defineProperty(ctx.request, 'query', def)
-  //     Object.defineProperty(ctx, 'query', def)
-  //   }
-  //
-  //   return next()
-  // },
+  (ctx, next) => {
+    if (ctx.request.query && typeof ctx.request.query === 'object') {
+      // node.js removed the Object.prototype on querystring https://github.com/nodejs/node/pull/6055
+      // coerce query to inherit from Object.prototype
+      const def = {
+        value: { ...ctx.request.query },
+        writable: false,
+      }
+      Object.defineProperty(ctx.request, 'query', def)
+      Object.defineProperty(ctx, 'query', def)
+    }
+
+    return next()
+  },
 
   // JS-Data querystring's contain JSON.stringified "where" value
   // we must JSON.parse them if they exist
