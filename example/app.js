@@ -2,7 +2,15 @@
 
 const chalk = require('chalk');
 // setup our app/framework
-const app = require('../setup/index')({ root: __dirname });
+const app = require('../setup/index')({
+  app: {
+    // optionally pass your own Koa instance
+    koaInstance: undefined,
+    // optionally set a router prefix
+    prefix: '/api',
+  },
+  root: __dirname
+});
 
 // require('koa-qs')(app);
 

@@ -5,10 +5,10 @@ const Router = require('koa-router');
 const { notImplemented } = require('../util/responses');
 
 
-module.exports = function setupApp({ prefix } = { prefix: '' }) {
+module.exports = function setupApp({ koaInstance, prefix } = { prefix: '' }) {
   debug('running "setupApp()"');
 
-  const app = new Koa();
+  const app = koaInstance || new Koa();
   debug('koa initialized');
   const router = new Router({
     prefix
