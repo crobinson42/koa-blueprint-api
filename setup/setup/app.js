@@ -5,12 +5,14 @@ const Router = require('koa-router');
 const { notImplemented } = require('../util/responses');
 
 
-module.exports = function setupApp(opts = {}) {
+module.exports = function setupApp({ prefix } = { prefix: '' }) {
   debug('running "setupApp()"');
 
   const app = new Koa();
   debug('koa initialized');
-  const router = new Router();
+  const router = new Router({
+    prefix
+  });
   debug('koa-router initialized');
 
   debug('loading Controllers routes to koa-router');
