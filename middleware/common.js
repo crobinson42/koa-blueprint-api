@@ -4,13 +4,11 @@ const qs = require('qs')
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (opts = {}) => [
-  require('koa-logger')(),
+  require('koa-logger')(opts.logger),
   require('koa-useragent'),
   require('@koa/cors')(opts.cors),
-  require('koa-body')({
-    // jsonLimit: `${process.env.MAX_REQ_BODY_SIZE_KB}kb`, // default 1mb
-  }),
-  require('koa-respond')(),
+  require('koa-body')(opts.body),
+  require('koa-respond')(opts.respond),
 
   // query string nesting is not supported out of the box because there's no spec
   // we use the qs lib if a querystring is on the request
