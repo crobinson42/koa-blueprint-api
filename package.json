@@ -23,32 +23,25 @@
     "setup"
   ],
   "dependencies": {
-    "@koa/cors": "^2.2.2",
-    "debug": "^3.1.0",
+    "debug": "^3.2.6",
     "dotenv-flow": "^0.1.0",
     "isobject": "^3.0.1",
-    "koa": "^2.5.2",
-    "koa-body": "^4.0.4",
-    "koa-logger": "^3.2.0",
+    "koa": "^2.8.1",
+    "koa-body": "^4.1.1",
+    "koa-logger": "^3.2.1",
     "koa-respond": "^2.1.0",
     "koa-router": "^7.4.0",
-    "koa-useragent": "^1.1.0",
-    "lodash": "^4.17.10",
-    "qs": "^6.5.2"
+    "koa-useragent": "^1.2.1",
+    "lodash": "^4.17.15",
+    "qs": "^6.8.0"
   },
   "devDependencies": {
-    "bson": "^3.0.2",
-    "chalk": "^2.4.1",
-    "eslint": "^5.4.0",
-    "eslint-config-americansoftware": "^1.0.0",
-    "js-data": "^3.0.4",
-    "js-data-adapter": "^0.8.5",
-    "js-data-mongodb": "^2.0.0",
-    "koa-jwt": "^3.3.2",
+    "chalk": "^2.4.2",
+    "eslint": "^5.16.0",
+    "eslint-config-americansoftware": "^5.0.0",
+    "koa-jwt": "^3.6.0",
     "lodash.snakecase": "^4.1.1",
-    "mongodb": "^3.1.6",
-    "pre-commit": "^1.2.2",
-    "prettier-config-americansoftware": "^1.0.0",
-    "supports-color": "^5.5.0"
+    "prettier-config-americansoftware": "^1.1.0",
+    "supports-color": "^7.0.0"
   }
 }

@@ -5,7 +5,6 @@ const qs = require('qs');
 module.exports = [
   require('koa-logger')(),
   require('koa-useragent'),
-  require('@koa/cors')(),
   require('koa-body')({ // https://github.com/dlau/koa-body
     // jsonLimit: `${process.env.MAX_REQ_BODY_SIZE_KB}kb`, // default 1mb
   }),
