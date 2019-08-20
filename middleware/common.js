@@ -6,7 +6,6 @@ const qs = require('qs')
 module.exports = (opts = {}) => [
   require('koa-logger')(opts.logger),
   require('koa-useragent'),
-  require('@koa/cors')(opts.cors),
   require('koa-body')(opts.body),
   require('koa-respond')(opts.respond),
 
