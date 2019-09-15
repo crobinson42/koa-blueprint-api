@@ -56,11 +56,15 @@ module.exports.getDirFileList = function getDirFileList(
   opts = { throw: false },
 ) {
   try {
-    return fs.readdirSync(dirPath).map(file => ({
-      file,
-      name: file.substr(0, file.search(/\.js$/)),
-      path: path.resolve(path.join(dirPath, file)),
-    }))
+    // filters out directories
+    return fs
+      .readdirSync(dirPath)
+      .map(file => ({
+        file,
+        name: file.substr(0, file.search(/\.js$/)),
+        path: path.resolve(path.join(dirPath, file)),
+      }))
+      .filter(({ name }) => !!name)
   } catch (e) {
     if (opts.throw) {
       debug(`Failed to read directory ${dirPath} in utils/setup.js`, e)
