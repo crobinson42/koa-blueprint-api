@@ -4,7 +4,7 @@ const qs = require('qs')
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (opts = {}) => [
-  require('koa-useragent'),
+  require('koa-useragent').userAgent,
   require('koa-body')(opts.body),
   require('koa-respond')(opts.respond),
 
