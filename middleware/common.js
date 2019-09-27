@@ -4,7 +4,6 @@ const qs = require('qs')
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (opts = {}) => [
-  require('koa-logger')(opts.logger),
   require('koa-useragent'),
   require('koa-body')(opts.body),
   require('koa-respond')(opts.respond),
@@ -23,10 +22,10 @@ module.exports = (opts = {}) => [
            * https://github.com/ljharb/qs/blob/master/lib/utils.js#L106
            */
           decoder(str, decoder, charset) {
-            const strWithoutPlus = str.replace(/\+/g, ' ');
+            const strWithoutPlus = str.replace(/\+/g, ' ')
             if (charset === 'iso-8859-1') {
               // unescape never throws, no try...catch needed:
-              return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+              return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape)
             }
 
             if (/^(\d+|\d*\.\d+)$/.test(str)) {
@@ -45,9 +44,9 @@ module.exports = (opts = {}) => [
 
             // utf-8
             try {
-              return decodeURIComponent(strWithoutPlus);
+              return decodeURIComponent(strWithoutPlus)
             } catch (e) {
-              return strWithoutPlus;
+              return strWithoutPlus
             }
           },
         }),
