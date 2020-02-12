@@ -23,7 +23,7 @@ function getControllerMethodPolicyList({ controller, method }) {
     return policies;
   }
   // check if controller has policy rule for all methods (ie: is not an object)
-  else if (!isObject(getControllerPolicyValue(controller))) {
+  else if (!isObject(getControllerPolicyValue(controller)) && getControllerPolicyValue(controller) !== undefined) {
     addPolicy(getControllerPolicyValue(controller), policies);
     return policies;
   }
