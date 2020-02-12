@@ -1,6 +1,6 @@
 {
   "name": "koa-blueprint-api",
-  "version": "2.0.5",
+  "version": "3.0.0-beta.1",
   "description": "A KOA.js REST API Server with auto-routing and configurations",
   "main": "index.js",
   "scripts": {
